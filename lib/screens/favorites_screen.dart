@@ -7,7 +7,7 @@ import '../widgets/loading_widget.dart';
 import '../widgets/empty_widget.dart';
 import 'movie_details_screen.dart';
 
-/// Favorites screen showing user's favorite movies
+/// Favorites screen with improved visual design
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
 
@@ -18,18 +18,33 @@ class FavoritesScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // Header with gradient accent
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
+                            Container(
+                              width: 4,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Colors.red.shade400,
+                                    Colors.red.shade600,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
                             Text(
                               'Favourites',
                               style: Theme.of(context)
@@ -39,33 +54,50 @@ class FavoritesScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
-                            Text(
-                              'Movies you love',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface
-                                        .withOpacity(0.6),
-                                  ),
-                            ),
                           ],
                         ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(16),
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text(
+                            'Movies you love',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.6),
+                                ),
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.favorite_rounded,
-                          color: Colors.red,
-                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.red.shade400,
+                          Colors.red.shade600,
+                        ],
                       ),
-                    ],
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.red.withOpacity(0.4),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.favorite_rounded,
+                      color: Colors.white,
+                      size: 22,
+                    ),
                   ),
                 ],
               ),
@@ -81,16 +113,56 @@ class FavoritesScreen extends StatelessWidget {
                   final favorites = favoritesProvider.favorites;
 
                   if (favorites.isEmpty) {
-                    return const EmptyWidget(
+                    return EmptyWidget(
                       icon: Icons.favorite_outline_rounded,
                       title: 'No favourites yet',
-                      subtitle:
-                          'Start adding movies to your favourites by tapping the heart icon',
+                      subtitle: 'Start adding movies to your favourites\nby tapping the heart icon',
+                      action: Container(
+                        margin: const EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.red.shade400,
+                              Colors.red.shade600,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.red.withOpacity(0.3),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.explore_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Discover Movies',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     );
                   }
 
                   return GridView.builder(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -108,12 +180,32 @@ class FavoritesScreen extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: 20),
                           decoration: BoxDecoration(
-                            color: Colors.red,
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.red.shade400,
+                                Colors.red.shade700,
+                              ],
+                            ),
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: const Icon(
-                            Icons.delete_rounded,
-                            color: Colors.white,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.delete_rounded,
+                                color: Colors.white,
+                                size: 28,
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Remove',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         onDismissed: (_) {
@@ -132,6 +224,7 @@ class FavoritesScreen extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
+                              margin: const EdgeInsets.fromLTRB(16, 0, 16, 100),
                             ),
                           );
                         },

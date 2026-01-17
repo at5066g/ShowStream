@@ -8,7 +8,7 @@ import 'circular_rating.dart';
 import 'network_image_widget.dart';
 
 /// Movie card widget for displaying movie information in a grid
-class MovieCard extends StatelessWidget {
+class MovieCard extends StatefulWidget {
   final Movie movie;
   final VoidCallback? onTap;
 
@@ -19,13 +19,27 @@ class MovieCard extends StatelessWidget {
   });
 
   @override
+  State<MovieCard> createState() => _MovieCardState();
+}
+
+class _MovieCardState extends State<MovieCard> {
+  bool _isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
     final movieProvider = context.watch<MovieProvider>();
-    final genres = movieProvider.getGenreNames(movie.genreIds);
+    final genres = movieProvider.getGenreNames(widget.movie.genreIds);
 
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) => setState(() => _isPressed = false),
+      onTapCancel: () => setState(() => _isPressed = false),
+      onTap: widget.onTap,
+      child: AnimatedScale(
+        scale: _isPressed ? 0.95 : 1.0,
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.easeOut,
+        child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
@@ -43,7 +57,7 @@ class MovieCard extends StatelessWidget {
               // Movie poster
               Positioned.fill(
                 child: NetworkImageWidget(
-                  imageUrl: AppConstants.getPosterUrl(movie.posterPath),
+                  imageUrl: AppConstants.getPosterUrl(widget.movie.posterPath),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -70,7 +84,7 @@ class MovieCard extends StatelessWidget {
                 top: 8,
                 right: 8,
                 child: CircularRating(
-                  rating: movie.voteAverage,
+                  rating: widget.movie.voteAverage,
                   size: 40,
                   strokeWidth: 3,
                 ),
@@ -87,7 +101,7 @@ class MovieCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        movie.title,
+                        widget.movie.title,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -112,6 +126,7 @@ class MovieCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),

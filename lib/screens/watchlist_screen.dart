@@ -7,7 +7,7 @@ import '../widgets/loading_widget.dart';
 import '../widgets/empty_widget.dart';
 import 'movie_details_screen.dart';
 
-/// Watchlist screen showing movies user wants to watch later
+/// Watchlist screen with improved visual design
 class WatchlistScreen extends StatelessWidget {
   const WatchlistScreen({super.key});
 
@@ -18,18 +18,33 @@ class WatchlistScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // Header with gradient accent
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
+                            Container(
+                              width: 4,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Theme.of(context).colorScheme.primary,
+                                    Theme.of(context).colorScheme.secondary,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
                             Text(
                               'Watchlist',
                               style: Theme.of(context)
@@ -39,36 +54,53 @@ class WatchlistScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
-                            Text(
-                              'Movies to watch later',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface
-                                        .withOpacity(0.6),
-                                  ),
-                            ),
                           ],
                         ),
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text(
+                            'Movies to watch later',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.6),
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary,
+                        ],
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(16),
+                              .withOpacity(0.4),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
                         ),
-                        child: Icon(
-                          Icons.bookmark_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.bookmark_rounded,
+                      color: Colors.white,
+                      size: 22,
+                    ),
                   ),
                 ],
               ),
@@ -84,16 +116,59 @@ class WatchlistScreen extends StatelessWidget {
                   final watchlist = watchlistProvider.watchlist;
 
                   if (watchlist.isEmpty) {
-                    return const EmptyWidget(
+                    return EmptyWidget(
                       icon: Icons.bookmark_outline_rounded,
                       title: 'No movies in watchlist',
-                      subtitle:
-                          'Add movies to watch later by tapping the bookmark icon',
+                      subtitle: 'Add movies to watch later\nby tapping the bookmark icon',
+                      action: Container(
+                        margin: const EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context).colorScheme.primary,
+                              Theme.of(context).colorScheme.secondary,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.3),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.explore_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Discover Movies',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     );
                   }
 
                   return GridView.builder(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -111,12 +186,32 @@ class WatchlistScreen extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: 20),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.error,
+                            gradient: LinearGradient(
+                              colors: [
+                                Theme.of(context).colorScheme.primary,
+                                Theme.of(context).colorScheme.secondary,
+                              ],
+                            ),
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: const Icon(
-                            Icons.delete_rounded,
-                            color: Colors.white,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.delete_rounded,
+                                color: Colors.white,
+                                size: 28,
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Remove',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         onDismissed: (_) {
@@ -135,6 +230,7 @@ class WatchlistScreen extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
+                              margin: const EdgeInsets.fromLTRB(16, 0, 16, 100),
                             ),
                           );
                         },
