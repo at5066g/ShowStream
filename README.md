@@ -168,14 +168,3 @@ This app uses the [TMDB API v3](https://developer.themoviedb.org/docs):
 - `GET /movie/{id}` - Get movie details
 
 ---
-
-## License
-
-This project is for educational/assignment purposes.
-
----
-
-## Acknowledgments
-
-- [TMDB](https://www.themoviedb.org/) for the movie data API
-- [Flutter](https://flutter.dev/) for the amazing framework

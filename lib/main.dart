@@ -48,7 +48,7 @@ class MovieApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'MovieHub',
+        title: 'ShowStream',
         debugShowCheckedModeBanner: false,
         theme: _buildDarkTheme(),
         home: const SplashScreen(),

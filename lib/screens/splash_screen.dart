@@ -132,7 +132,7 @@ class _SplashScreenState extends State<SplashScreen>
                     ],
                   ).createShader(bounds),
                   child: const Text(
-                    'MovieHub',
+                    'ShowStream',
                     style: TextStyle(
                       fontSize: 42,
                       fontWeight: FontWeight.bold,
