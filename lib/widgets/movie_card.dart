@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import '../models/movie.dart';
 import '../providers/movie_provider.dart';
 import '../utils/constants.dart';
 import 'genre_chip.dart';
 import 'circular_rating.dart';
+import 'network_image_widget.dart';
 
 /// Movie card widget for displaying movie information in a grid
 class MovieCard extends StatelessWidget {
@@ -42,33 +42,10 @@ class MovieCard extends StatelessWidget {
             children: [
               // Movie poster
               Positioned.fill(
-                child: movie.posterPath != null
-                    ? CachedNetworkImage(
-                        imageUrl: AppConstants.getPosterUrl(movie.posterPath),
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => Container(
-                          color: Theme.of(context).colorScheme.surfaceVariant,
-                          child: const Center(
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Container(
-                          color: Theme.of(context).colorScheme.surfaceVariant,
-                          child: Icon(
-                            Icons.movie_outlined,
-                            size: 48,
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-                          ),
-                        ),
-                      )
-                    : Container(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
-                        child: Icon(
-                          Icons.movie_outlined,
-                          size: 48,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-                        ),
-                      ),
+                child: NetworkImageWidget(
+                  imageUrl: AppConstants.getPosterUrl(movie.posterPath),
+                  fit: BoxFit.cover,
+                ),
               ),
               // Gradient overlay
               Positioned.fill(

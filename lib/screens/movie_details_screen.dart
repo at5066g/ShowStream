@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import '../models/movie.dart';
 import '../providers/movie_provider.dart';
@@ -8,6 +7,7 @@ import '../providers/watchlist_provider.dart';
 import '../utils/constants.dart';
 import '../widgets/circular_rating.dart';
 import '../widgets/genre_chip.dart';
+import '../widgets/network_image_widget.dart';
 
 /// Movie details screen with full movie information
 class MovieDetailsScreen extends StatelessWidget {
@@ -140,29 +140,14 @@ class MovieDetailsScreen extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   // Backdrop image
-                  movie.backdropPath != null
-                      ? CachedNetworkImage(
-                          imageUrl:
-                              AppConstants.getBackdropUrl(movie.backdropPath),
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Container(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .surfaceVariant,
-                          ),
-                          errorWidget: (context, url, error) => Container(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .surfaceVariant,
-                            child: const Icon(Icons.movie_outlined, size: 64),
-                          ),
-                        )
-                      : Container(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .surfaceVariant,
-                          child: const Icon(Icons.movie_outlined, size: 64),
-                        ),
+                  NetworkImageWidget(
+                    imageUrl: AppConstants.getBackdropUrl(movie.backdropPath),
+                    fit: BoxFit.cover,
+                    errorWidget: Container(
+                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      child: const Icon(Icons.movie_outlined, size: 64),
+                    ),
+                  ),
                   // Gradient overlay
                   Container(
                     decoration: BoxDecoration(

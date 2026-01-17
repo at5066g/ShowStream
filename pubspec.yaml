@@ -41,7 +41,7 @@ dependencies:
   shared_preferences: ^2.2.2
   
   # Image caching for movie posters
-  cached_network_image: ^3.3.0
+  cached_network_image: ^3.2.3
   
   # Google Fonts for typography
   google_fonts: ^4.0.4
