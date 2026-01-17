@@ -1,0 +1,9 @@
+/// API Key configuration template
+/// 
+/// To use this app:
+/// 1. Copy this file and rename it to: api_key.dart
+/// 2. Replace 'YOUR_API_KEY_HERE' with your actual TMDB API key
+/// 3. Get your free API key from: https://www.themoviedb.org/settings/api
+/// 
+/// IMPORTANT: api_key.dart is gitignored - never commit your real API key!
+const String tmdbApiKey = 'YOUR_API_KEY_HERE';
